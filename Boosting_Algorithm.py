@@ -18,10 +18,9 @@ seed = random.seed(5)
 data = pd.read_csv('train.csv')
 
 Features = ['Number words female','Total words','Number of words lead','Difference in words lead and co-lead','Number of male actors','Year','Number of female actors','Number words male','Gross','Mean Age Male','Mean Age Female','Age Lead','Age Co-Lead']
-Randomsample = random.sample(Features, (random.randint(1,len(Features))))
 Ylabel = ['Lead'] 
-nEWFEAT = [ 'Difference in words lead and co-lead', 'Number words male', 'Age Co-Lead', 'Number words female', 'Number of male actors', 'Age Lead', 'Mean Age Male', 'Number of words lead', 'Mean Age Female', 'Total words', 'Number of female actors']
-X = data[nEWFEAT].values
+testfeat = ['Number words female', 'Number of female actors', 'Age Lead', 'Difference in words lead and co-lead','Age Co-Lead', 'Number of male actors', 'Number words male', 'Mean Age Female']
+X = data[testfeat].values
 y = data[Ylabel].values
 
 n_folds = 10
