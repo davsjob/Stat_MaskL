@@ -26,7 +26,7 @@ y = data[ylabel].values
 n_folds = 10
 kf = KFold(n_splits=n_folds)
 
-#Classifier choose, default value of 100 estimators
+#Classifier choice, default value of 100 estimators
 clf = RandomForestClassifier(n_estimators=100)
 
 #Creates a list of importances
