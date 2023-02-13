@@ -7,3 +7,7 @@ featureimportance.py uses randomforests to find the most important features, pri
 together with its standard deviation from. 
 
 Dataset is made to training and validation from splittning and using k-fold crossvalidation with k=10. 
+
+
+Testing_Features randomizes parameters n amounts of times, using Adaboost or GradientBoosting classification, depending on 
+input in the function "boostingparameters".
