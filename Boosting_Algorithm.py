@@ -19,9 +19,8 @@ data = pd.read_csv('train.csv')
 
 Features = ['Number words female','Total words','Number of words lead','Difference in words lead and co-lead','Number of male actors','Year','Number of female actors','Number words male','Gross','Mean Age Male','Mean Age Female','Age Lead','Age Co-Lead']
 Ylabel = ['Lead'] 
-testfeat = ['Number words female', 'Number of female actors', 'Age Lead', 'Difference in words lead and co-lead','Age Co-Lead', 'Number of male actors', 'Number words male', 'Mean Age Female']
-X = data[testfeat].values
-y = data[Ylabel].values
+testfeat = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male','Number of words lead','Total words','Gross','Year']
+index = []
 
 n_folds = 10
 
@@ -32,11 +31,13 @@ Gmean_acc = []
 atimes = []
 gtimes = []
 
-test_range = range(1,2)
+test_range = range(13)
 for i in test_range:
-    clf = AdaBoostClassifier(n_estimators=100)
+    X = data[testfeat].values
+    y = data[Ylabel].values
+    #clf = AdaBoostClassifier(n_estimators=100)
     gclf = GradientBoostingClassifier(n_estimators=100)
-    ascores = []
+    #ascores = []
     gscores = []
     
 
@@ -46,17 +47,17 @@ for i in test_range:
         y_train, y_test = y[train_index], y[test_index]
         
         # Train the Gradient and AdaBoost classifier on the training set
-        astart = time.perf_counter()
+        #astart = time.perf_counter()
         
-        clf.fit(X_train, y_train)
+        #clf.fit(X_train, y_train)
 
         # Predict the labels for the test set
-        Ay_pred = clf.predict(X_test)
+        #Ay_pred = clf.predict(X_test)
         
 
         # Compute the accuracy score for this fold
-        Ascore = skm.accuracy_score(y_test, Ay_pred)
-        aend = time.perf_counter()
+        #Ascore = skm.accuracy_score(y_test, Ay_pred)
+        #aend = time.perf_counter()
 
         gstart = time.perf_counter()
         gclf.fit(X_train, y_train)
@@ -65,29 +66,30 @@ for i in test_range:
         gend = time.perf_counter()
 
 
-        ascores.append(Ascore)
+        #ascores.append(Ascore)
         gscores.append(Gscore)
-        atimes.append(aend-astart)
+        #atimes.append(aend-astart)
         gtimes.append(gend-gstart)
     # Compute the mean accuracy score across all folds
-    Amean_score = np.mean(ascores)
+    #Amean_score = np.mean(ascores)
     Gmean_score = np.mean(gscores)
 
-    Amean_acc.append(Amean_score)
+    #Amean_acc.append(Amean_score)
     Gmean_acc.append(Gmean_score)
+    
+    index.append(len(testfeat))
+    testfeat.pop()
+    
 
 
 
-print(f'Max accuracy of AdaBoost was; ', max(Amean_acc))
-print(f'Max accuracy of Gradient boosting was; ',max(Gmean_acc))
-
-print(f'Time for AdaBoost: ', np.mean(atimes))
+#print(f'Time for AdaBoost: ', np.mean(atimes))
 print(f'Time for GradientBooost: ', np.mean(gtimes))
 
-"""plt.figure(1)
-plt.scatter(test_range, Amean_acc)
+#plt.figure(1)
+#plt.scatter(test_range, Amean_acc)
 
-plt.figure(2)
+plt.figure(1)
 plt.scatter(test_range, Gmean_acc)
-
-plt.show()"""
+plt.xticks(range(13),index, rotation=90)
+plt.show()

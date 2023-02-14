@@ -75,8 +75,9 @@ plt.rc('xtick', labelsize=8)    # fontsize of the tick labels
 plt.figure()
 plt.title('Importance of individual features')
 plt.bar(val_to_feature.keys(), val_to_feature.values(), yerr=std[srt_indx])
-plt.xticks(rotation=90,)
+plt.xticks(range(13), range(1,14))
 plt.ylabel('Avg feature importance')
+plt.savefig('avgf_importance.png')
 plt.show()
 
 
