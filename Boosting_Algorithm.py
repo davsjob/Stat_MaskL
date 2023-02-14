@@ -31,9 +31,9 @@ Gmean_acc = []
 atimes = []
 gtimes = []
 
-test_range = range(1)
+test_range = range(13)
 for i in test_range:
-    X = data[usedfeat].values
+    X = data[testfeat].values
     y = data[Ylabel].values
     #clf = AdaBoostClassifier(n_estimators=100)
     gclf = GradientBoostingClassifier(n_estimators=100)
@@ -88,8 +88,8 @@ print(f'Time for GradientBooost: {round(np.mean(gtimes), 3)} seconds')
 print(f'Accuracy was : {round(max(Gmean_acc), 3)}' )
 #plt.figure(1)
 #plt.scatter(test_range, Amean_acc)
-"""
+
 plt.figure(1)
 plt.scatter(test_range, Gmean_acc)
 plt.xticks(range(13),index, rotation=90)
-plt.show()"""
+plt.show()
