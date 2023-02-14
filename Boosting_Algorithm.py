@@ -21,7 +21,7 @@ Features = ['Number words female','Total words','Number of words lead','Differen
 Ylabel = ['Lead'] 
 testfeat = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male','Number of words lead','Total words','Gross','Year']
 index = []
-
+usedfeat = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male']
 n_folds = 10
 
 kf = KFold(n_splits=n_folds)
@@ -31,9 +31,9 @@ Gmean_acc = []
 atimes = []
 gtimes = []
 
-test_range = range(13)
+test_range = range(1)
 for i in test_range:
-    X = data[testfeat].values
+    X = data[usedfeat].values
     y = data[Ylabel].values
     #clf = AdaBoostClassifier(n_estimators=100)
     gclf = GradientBoostingClassifier(n_estimators=100)
@@ -76,7 +76,7 @@ for i in test_range:
 
     #Amean_acc.append(Amean_score)
     Gmean_acc.append(Gmean_score)
-    
+
     index.append(len(testfeat))
     testfeat.pop()
     
@@ -84,12 +84,12 @@ for i in test_range:
 
 
 #print(f'Time for AdaBoost: ', np.mean(atimes))
-print(f'Time for GradientBooost: ', np.mean(gtimes))
-
+print(f'Time for GradientBooost: {round(np.mean(gtimes), 3)} seconds')
+print(f'Accuracy was : {round(max(Gmean_acc), 3)}' )
 #plt.figure(1)
 #plt.scatter(test_range, Amean_acc)
-
+"""
 plt.figure(1)
 plt.scatter(test_range, Gmean_acc)
 plt.xticks(range(13),index, rotation=90)
-plt.show()
+plt.show()"""
