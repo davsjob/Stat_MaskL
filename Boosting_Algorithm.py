@@ -95,5 +95,6 @@ plt.ylabel('Accuracy')
 plt.title('Accuracy when removing features')
 plt.xlabel('Number of features')
 plt.xticks(range(13),index, rotation=90)
+plt.savefig('accgradient.png')
 plt.show()
-plt.savefig('AccuracyGradientBoost.png')
+

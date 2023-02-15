@@ -80,5 +80,4 @@ plt.ylabel('Avg feature importance')
 plt.xlabel('Feature number')
 plt.savefig('avgf_importance.png')
 plt.show()
-plt.savefig('importantfeatures.png')
 
