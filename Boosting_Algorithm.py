@@ -83,12 +83,17 @@ for i in test_range:
 
 
 #print(f'Time for AdaBoost: ', np.mean(atimes))
-print(f'Time for GradientBooost: {round(np.mean(gtimes), 3)} seconds')
+print(f'Time for each GradientBooost: {round(np.mean(gtimes), 3)} seconds')
+print(f'Total time', (round(np.sum(gtimes),3)))
 print(f'Max Accuracy was : {round(max(Gmean_acc),3)}' )
 #plt.figure(1)
 #plt.scatter(test_range, Amean_acc)
 
 plt.figure(1)
 plt.scatter(test_range, Gmean_acc)
+plt.ylabel('Accuracy')
+plt.title('Accuracy when removing features')
+plt.xlabel('Number of features')
 plt.xticks(range(13),index, rotation=90)
 plt.show()
+plt.savefig('AccuracyGradientBoost.png')

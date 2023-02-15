@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, cross_val_score
 import sklearn.metrics as skm
 print('STARTING CALCULATIONS')
 start = time.perf_counter()
@@ -39,7 +39,6 @@ Y = traindata[ylabel].values
 clf = GradientBoostingClassifier(n_estimators=100)
 
 scores = []
-f1scores = []
 #Performs k-fold cross-validation
 for train_index, test_index in kf.split(X):
 
@@ -52,16 +51,15 @@ for train_index, test_index in kf.split(X):
     y_pred = clf.predict(X_test)
     score = skm.accuracy_score(y_test, y_pred)
     scores.append(score)
-    f1scores.append(skm.f1_score(y_test, y_pred, pos_label='Female'))
+
+crossval = cross_val_score(clf, X, Y, cv=kf, scoring ='f1_macro')
+mean_CV = np.mean(crossval)
 
 meanmissclassification = 1 - np.mean(scores)
-meanf1 = np.mean(f1scores)
-
 end = time.perf_counter()
 
 print(f'DONE')
 print(f'Time taken: ', round(end-start, 3))
 print(f'Accuracy was : ', round(np.mean(scores),3))
 print(f'The estimated E_new was: ', round(meanmissclassification, 3))
-
-print(f'The mean F1 score across folds was: ', round(meanf1, 3) )
+print(f'Cross-val f1 score was: {round(mean_CV, 3)} with a std of {crossval.std()}')
