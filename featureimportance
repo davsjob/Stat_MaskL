@@ -77,7 +77,8 @@ plt.title('Importance of individual features')
 plt.bar(val_to_feature.keys(), val_to_feature.values(), yerr=std[srt_indx])
 plt.xticks(range(13), range(1,14))
 plt.ylabel('Avg feature importance')
+plt.xlabel('Feature number')
 plt.savefig('avgf_importance.png')
 plt.show()
-
+plt.savefig('importantfeatures.png')
 
