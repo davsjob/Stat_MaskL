@@ -61,5 +61,7 @@ end = time.perf_counter()
 
 print(f'DONE')
 print(f'Time taken: ', round(end-start, 3))
-print(f'The E-K_fold was: ', round(meanmissclassification, 3))
+print(f'Accuracy was : ', round(np.mean(scores),3))
+print(f'The estimated E_new was: ', round(meanmissclassification, 3))
+
 print(f'The mean F1 score across folds was: ', round(meanf1, 3) )
