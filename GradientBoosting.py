@@ -19,6 +19,9 @@ start = time.perf_counter()
 #Imports the csv file for training
 traindata = pd.read_csv('train.csv')
 
+#Import csv file for training
+testdata = pd.read_csv('test.csv')
+
 #Wanted classification
 ylabel = ['Lead']
 #The n number of most important features, in order of most important to least
@@ -34,6 +37,9 @@ kf = KFold(n_splits=n_folds)
 #X and Y from the csv
 X = traindata[importantfeatures].values
 Y = traindata[ylabel].values
+
+#Loads final testdata
+X_data = testdata[importantfeatures].values
 
 #Choosen classifier
 clf = GradientBoostingClassifier(n_estimators=100)
@@ -56,6 +62,9 @@ crossval = cross_val_score(clf, X, Y, cv=kf, scoring ='f1_macro')
 mean_CV = np.mean(crossval)
 
 meanmissclassification = 1 - np.mean(scores)
+
+y_pred_test = clf.predict(X_data)
+
 end = time.perf_counter()
 
 print(f'DONE')
@@ -63,3 +72,6 @@ print(f'Time taken: ', round(end-start, 3))
 print(f'Accuracy was : ', round(np.mean(scores),3))
 print(f'The estimated E_new was: ', round(meanmissclassification, 3))
 print(f'Cross-val f1 score was: {round(mean_CV, 3)} with a std of {crossval.std()}')
+
+print(f'Preditiction for testfile:')
+print(pd.value_counts(y_pred_test))
