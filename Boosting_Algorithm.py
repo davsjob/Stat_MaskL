@@ -13,15 +13,14 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import KFold
 import sklearn.metrics as skm
-import random
-seed = random.seed(5)
+
 data = pd.read_csv('train.csv')
 
 Features = ['Number words female','Total words','Number of words lead','Difference in words lead and co-lead','Number of male actors','Year','Number of female actors','Number words male','Gross','Mean Age Male','Mean Age Female','Age Lead','Age Co-Lead']
 Ylabel = ['Lead'] 
 testfeat = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male','Number of words lead','Total words','Gross','Year']
 index = []
-usedfeat = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male']
+usedfeat = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female', 'Mean Age Male']
 n_folds = 10
 
 kf = KFold(n_splits=n_folds)
@@ -85,7 +84,7 @@ for i in test_range:
 
 #print(f'Time for AdaBoost: ', np.mean(atimes))
 print(f'Time for GradientBooost: {round(np.mean(gtimes), 3)} seconds')
-print(f'Accuracy was : {round(max(Gmean_acc), 3)}' )
+print(f'Max Accuracy was : {round(max(Gmean_acc),3)}' )
 #plt.figure(1)
 #plt.scatter(test_range, Amean_acc)
 
