@@ -69,7 +69,7 @@ end = time.perf_counter()
 
 print(f'DONE')
 print(f'Time taken: ', round(end-start, 3))
-print(f'Accuracy was : ', round(np.mean(scores),3))
+print(f'Accuracy on training was: ', round(np.mean(scores),3))
 print(f'The estimated E_new was: ', round(meanmissclassification, 3))
 print(f'Cross-val f1 score was: {round(mean_CV, 3)} with a std of {crossval.std()}')
 
