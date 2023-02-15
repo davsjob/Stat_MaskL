@@ -32,7 +32,7 @@ n_folds = 10
 kf = KFold(n_splits=n_folds)
 
 #X and Y from the csv
-X = traindata[importantfeatures].values
+X = traindata[allfeatures].values
 Y = traindata[ylabel].values
 
 #Choosen classifier
