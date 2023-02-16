@@ -1,5 +1,4 @@
 #Boosting algorithm testfile for finding optimal parameters
-
 #Remove warings
 import warnings
 from sklearn.exceptions import DataConversionWarning

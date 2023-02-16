@@ -1,4 +1,3 @@
-# David Sjöberg 
 # Boosting using Gradient Classifier and the 10 most important features
 # 
 #Removes warning

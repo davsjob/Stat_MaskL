@@ -1,4 +1,4 @@
-# David Sjöberg 
+
 #Naive Classifier using Naive Bayes 
 # 
 #Removes warning
@@ -72,7 +72,7 @@ print(f'Accuracy was : ', round(np.mean(scores),3))
 print(f'The E-K_fold was: ', round(meanmissclassification, 3))
 print(f'Cross-val f1 score was: {round(np.mean(crossval), 3)} with a std of {round(crossval.std(), 3)}')
 
-print(f'Preditiction for testfile:')
+print(f'Preditiction for testfile using Gaussian NB:')
 print(pd.value_counts(y_pred_test))
 
 print(f'Total occurences of male, female')

@@ -9,10 +9,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score, KFold
 
 #File computes and sorts the importance of different features on the dataset using RandomForestClassifier
-#Created 2023-02-13
-#Creator: David Sjöberg
-
-
 start_time = time.perf_counter()
 data = pd.read_csv('train.csv')
 features = ['Number words female','Total words','Number of words lead','Difference in words lead and co-lead','Number of male actors','Year','Number of female actors','Number words male','Gross','Mean Age Male','Mean Age Female','Age Lead','Age Co-Lead']

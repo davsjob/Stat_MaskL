@@ -1,4 +1,3 @@
-#Boosting code David Sjöberg
 
 #Removes warning
 import warnings
@@ -92,9 +91,9 @@ print(f'Max Accuracy was : {round(max(Gmean_acc),3)}' )
 plt.figure(1)
 plt.scatter(test_range, Gmean_acc)
 plt.ylabel('Accuracy')
-plt.title('Accuracy when removing features')
+plt.title('Accuracy = f(Number of features)')
 plt.xlabel('Number of features')
 plt.xticks(range(13),index, rotation=90)
-plt.savefig('accgradient.png')
+plt.savefig('accgradient.png', dpi=1000)
 plt.show()
 
