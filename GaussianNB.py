@@ -74,3 +74,7 @@ print(f'Cross-val f1 score was: {round(np.mean(crossval), 3)} with a std of {rou
 
 print(f'Preditiction for testfile:')
 print(pd.value_counts(y_pred_test))
+
+print(f'Total occurences of male, female')
+print(traindata['Lead'].value_counts())
+
