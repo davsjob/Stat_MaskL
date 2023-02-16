@@ -1,4 +1,4 @@
-# Boosting using Gradient Classifier and the 10 most important features
+# Boosting using LogReg and the 12 most important features
 # 
 #Removes warning
 import warnings
@@ -9,7 +9,7 @@ import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import KFold, cross_val_score
 import sklearn.metrics as skm
 print('STARTING CALCULATIONS')
@@ -18,13 +18,14 @@ start = time.perf_counter()
 #Imports the csv file for training
 traindata = pd.read_csv('train.csv')
 
+
 #Wanted classification
 ylabel = ['Lead']
 #The n number of most important features, in order of most important to least
 allfeatures =  ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male','Number of words lead','Total words','Gross','Year']
 
-#The 9 features giving the highest accuracy
-importantfeatures = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male']
+#The 12 features giving the highest accuracy
+importantfeatures = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male','Number of words lead','Total words','Gross']
 
 #Number of folds
 n_folds = 10
@@ -35,7 +36,7 @@ X = traindata[importantfeatures].values
 Y = traindata[ylabel].values
 
 #Choosen classifier
-clf = GradientBoostingClassifier(n_estimators=100)
+clf = LogisticRegression(penalty='l1', C=100, solver = "liblinear")
 
 #Performs k-fold cross-validation
 for train_index, test_index in kf.split(X):
@@ -54,12 +55,15 @@ mean_f1 = np.mean(f1)
 
 meanmissclassification = 1 - np.mean(accuracy)
 
+
+
 end = time.perf_counter()
 
 print(f'DONE')
 print(f'Time taken: ', round(end-start, 3))
-print(f'Accuracy on training was: {round(np.mean(accuracy),3)} with a std of {accuracy.std()}')
+print(f'Accuracy on training was: {round(np.mean(accuracy),3)} with a std of {round(accuracy.std(),3)}')
 print(f'The estimated E_new was: ', round(meanmissclassification, 3))
-print(f'Cross-val f1 score was: {round(mean_f1, 3)} with a std of {f1.std()}')
+print(f'Cross-val f1 score was: {round(mean_f1, 3)} with a std of {round(f1.std(),3)}')
+
 
 

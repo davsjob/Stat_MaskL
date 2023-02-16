@@ -21,11 +21,6 @@ start = time.perf_counter()
 #Imports the csv file for training
 traindata = pd.read_csv('train.csv')
 
-
-
-#Import csv file for training
-testdata = pd.read_csv('test.csv')
-
 #Wanted classification
 ylabel = ['Lead']
 #The n number of most important features, in order of most important to least
@@ -41,9 +36,6 @@ kf = KFold(n_splits=n_folds)
 #X and Y from the csv
 X = traindata[allfeatures].values
 Y = traindata[ylabel].values
-
-#Loads final testdata
-X_data = testdata[allfeatures].values
 
 #Choosen classifier
 clf = GaussianNB()
@@ -62,10 +54,6 @@ for train_index, test_index in kf.split(X):
 scores = cross_val_score(clf, X, Y, cv=kf)
 meanmissclassification = 1 - np.mean(scores)
 f1 = cross_val_score(clf, X, Y, cv=kf, scoring ='f1_macro')
-
-y_pred_test = clf.predict(X_data)
-
-
 end = time.perf_counter()
 
 print(f'DONE')
@@ -78,7 +66,6 @@ print(f'Accuracy was : {round(np.mean(scores),3)} with a std of {round(scores.st
 print(f'The E-K_fold was: ', round(meanmissclassification, 3))
 print(f'Cross-val f1 score was: {round(np.mean(f1), 3)} with a std of {round(f1.std(), 3)}')
 
-print(f'Preditiction for testfile using Gaussian NB:')
-print(pd.value_counts(y_pred_test))
+
 
 
