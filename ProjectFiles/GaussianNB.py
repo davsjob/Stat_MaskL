@@ -1,4 +1,5 @@
-# Boosting using Gradient Classifier and the 10 most important features
+
+#Naive Classifier using Naive Bayes 
 # 
 #Removes warning
 import warnings
@@ -9,7 +10,7 @@ import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import KFold, cross_val_score
 import sklearn.metrics as skm
 print('STARTING CALCULATIONS')
@@ -34,16 +35,15 @@ n_folds = 10
 kf = KFold(n_splits=n_folds)
 
 #X and Y from the csv
-X = traindata[importantfeatures].values
+X = traindata[allfeatures].values
 Y = traindata[ylabel].values
 
 #Loads final testdata
-X_data = testdata[importantfeatures].values
+X_data = testdata[allfeatures].values
 
 #Choosen classifier
-clf = GradientBoostingClassifier(n_estimators=100)
+clf = GaussianNB()
 
-scores = []
 #Performs k-fold cross-validation
 for train_index, test_index in kf.split(X):
 
@@ -54,24 +54,25 @@ for train_index, test_index in kf.split(X):
         
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test)
-    score = skm.accuracy_score(y_test, y_pred)
-    scores.append(score)
-
-crossval = cross_val_score(clf, X, Y, cv=kf, scoring ='f1_macro')
-mean_CV = np.mean(crossval)
-
+    
+scores = cross_val_score(clf, X, Y, cv=kf)
 meanmissclassification = 1 - np.mean(scores)
+f1 = cross_val_score(clf, X, Y, cv=kf, scoring ='f1_macro')
 
 y_pred_test = clf.predict(X_data)
+
 
 end = time.perf_counter()
 
 print(f'DONE')
 print(f'Time taken: ', round(end-start, 3))
-print(f'Accuracy on training was: ', round(np.mean(scores),3))
-print(f'The estimated E_new was: ', round(meanmissclassification, 3))
-print(f'Cross-val f1 score was: {round(mean_CV, 3)} with a std of {crossval.std()}')
+print(f'Accuracy was : {round(np.mean(scores),3)} with a std of {round(scores.std(), 3)}')
+print(f'The E-K_fold was: ', round(meanmissclassification, 3))
+print(f'Cross-val f1 score was: {round(np.mean(f1), 3)} with a std of {round(f1.std(), 3)}')
 
-print(f'Preditiction for testfile:')
+print(f'Preditiction for testfile using Gaussian NB:')
 print(pd.value_counts(y_pred_test))
+
+print(f'Total occurences of male, female in train.csv')
+print(traindata['Lead'].value_counts())
 

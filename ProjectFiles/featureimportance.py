@@ -68,7 +68,7 @@ print("\n".join("{}\t{}".format(k, v) for k, v in val_to_feature.items()))
 
 # Plot the feature importances as a bar plot
 plt.rc('xtick', labelsize=8)    # fontsize of the tick labels
-plt.figure()
+plt.figure(dpi=1000)
 plt.title('Importance of individual features')
 plt.bar(val_to_feature.keys(), val_to_feature.values(), yerr=std[srt_indx])
 plt.xticks(range(13), range(1,14))
