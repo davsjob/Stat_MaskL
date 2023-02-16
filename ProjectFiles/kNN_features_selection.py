@@ -52,14 +52,15 @@ for i in range(len(features), 0, -1):
     max_accuracy = max(accuracies)
     max_accuracies.append(max_accuracy)
 
-
 # Plot results
+plt.figure(dpi=1000)
 plt.scatter(num_features, max_accuracies)
 plt.title('Maximum accuracy = f(Number of features)')
 plt.xlabel('Number of Features')
 plt.ylabel('Maximum Accuracy')
 plt.xticks(num_features)
-plt.show()
+plt.savefig('kNN_features.png')
+
 
 
 
