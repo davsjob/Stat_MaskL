@@ -35,7 +35,7 @@ X = traindata[importantfeatures].values
 Y = traindata[ylabel].values
 
 #Choosen classifier
-clf = GradientBoostingClassifier(n_estimators=300)
+clf = GradientBoostingClassifier(n_estimators=100)
 
 #Performs k-fold cross-validation
 for train_index, test_index in kf.split(X):
