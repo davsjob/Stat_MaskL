@@ -1,0 +1,28 @@
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+import torchvision
+import torchvision.transforms as transforms
+
+z = np.array([0,-1,1])
+
+def p(z):
+    e_terms = np.e ** z
+    probs = []
+    for i in z:
+        p = (np.e ** i) / (np.sum(e_terms))
+        probs.append(p)
+    return probs
+probs = p(z)
+y = np.eye(3)
+
+def l(y,p):
+    loss = []
+    for i in range(len(p)):
+        l = -(y[i] * np.log(p[i]))
+        loss.append(l)
+    return loss
+print(np.diag(l(y,probs)))
+print(np.cumsum(np.diag((l(y,probs)))))

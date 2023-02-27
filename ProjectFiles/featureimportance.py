@@ -5,6 +5,7 @@ import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.inspection import permutation_importance
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score, KFold
 
@@ -40,7 +41,7 @@ for train_i, test_i in kf.split(X):
     
     #Appends importances values to importances
     importances.append(clf.feature_importances_)
-
+    
 #Calculates standard variation of importances
 std = np.std(importances, axis = 0)
 

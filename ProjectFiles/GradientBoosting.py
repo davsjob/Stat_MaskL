@@ -35,7 +35,7 @@ kf = KFold(n_splits=n_folds)
 X = traindata[importantfeatures].values
 Y = traindata[ylabel].values
 
-X_final = testdata[importantfeatures].values
+X_final = testdata[importantfeatures]
 
 #Choosen classifier
 clf = GradientBoostingClassifier(n_estimators=100)
@@ -58,7 +58,12 @@ mean_f1 = np.mean(f1)
 meanmissclassification = 1 - np.mean(accuracy)
 
 yfinalpred = clf.predict(X_final)
+
 results = pd.DataFrame(yfinalpred)
+results.replace(to_replace = 'Female', value = 1, inplace=True)
+results.replace(to_replace = 'Male', value = 0, inplace=True)
+
+results.to_csv('predictions.csv')
 end = time.perf_counter()
 
 print(f'DONE')
