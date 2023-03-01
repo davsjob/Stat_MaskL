@@ -5,6 +5,7 @@ import warnings
 from sklearn.exceptions import DataConversionWarning
 warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 
+import csv
 import time
 import numpy as np
 import pandas as pd
@@ -33,7 +34,7 @@ kf = KFold(n_splits=n_folds)
 
 #X and Y from the csv
 X = traindata[importantfeatures].values
-Y = traindata[ylabel].values
+Y = np.where(traindata[ylabel].values == 'Female', 1, 0)
 
 X_final = testdata[importantfeatures]
 
@@ -60,10 +61,9 @@ meanmissclassification = 1 - np.mean(accuracy)
 yfinalpred = clf.predict(X_final)
 
 results = pd.DataFrame(yfinalpred)
-results.replace(to_replace = 'Female', value = 1, inplace=True)
-results.replace(to_replace = 'Male', value = 0, inplace=True)
 
-results.to_csv('predictions.csv')
+results.T.to_csv('predictions.csv')
+
 end = time.perf_counter()
 
 print(f'DONE')
@@ -71,6 +71,8 @@ print(f'Time taken: ', round(end-start, 3))
 print(f'Accuracy on training was: {round(np.mean(accuracy),3)} with a std of {accuracy.std()}')
 print(f'The estimated E_new was: ', round(meanmissclassification, 3))
 print(f'Cross-val f1 score was: {round(mean_f1, 3)} with a std of {f1.std()}')
+
+
 
 print(f'Final prediction was:')
 print(results.value_counts())
