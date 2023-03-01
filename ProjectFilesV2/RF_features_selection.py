@@ -31,11 +31,12 @@ times = []
 test_range = range(13)
 for i in test_range:
     X = data[testfeat].values
+
+    # Sets binary where Female == 1 
     y = np.where(data[Ylabel].values == 'Female', 1, 0)
     
-    #Used GradientBoostingClassifier this time
-    #For other classifier, change it here
-    clf = GradientBoostingClassifier(n_estimators=100)
+    #RandomForest classifier
+    clf = RandomForestClassifier(n_estimators=200)
     
     
     
@@ -45,15 +46,20 @@ for i in test_range:
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
 
+        # trains classifier on training data-fold
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_test)
 
     end = time.perf_counter()
     times.append(end-start)
+
+    # appends cross evaluation score
     mean_score = np.mean(cross_val_score(clf, X, y, cv=kf))
     mean_acc.append(mean_score)
 
     index.append(len(testfeat))
+
+    # removes a feature
     testfeat.pop()
     
 
@@ -69,6 +75,5 @@ plt.ylabel('Accuracy')
 plt.title('Accuracy = f(Number of features)')
 plt.xlabel('Number of features')
 plt.xticks(range(13),index, rotation=90)
-plt.savefig('accgradient.png', dpi=1000)
 plt.show()
 

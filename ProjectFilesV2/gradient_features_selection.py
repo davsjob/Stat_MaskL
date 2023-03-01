@@ -21,6 +21,7 @@ testfeat = ['Number words female','Number of female actors','Age Lead','Differen
 
 index = []
 
+#numbers of folds for k-fold cross val
 n_folds = 10
 kf = KFold(n_splits=n_folds)
 
@@ -31,10 +32,10 @@ times = []
 test_range = range(13)
 for i in test_range:
     X = data[testfeat].values
+    # Sets binary where Female == 1 
     y = np.where(data[Ylabel].values == 'Female', 1, 0)
     
-    #Used GradientBoostingClassifier this time
-    #For other classifier, change it here
+    #Used GradientBoostingClassifier with 100 estimators
     clf = GradientBoostingClassifier(n_estimators=100)
     
     
@@ -45,15 +46,21 @@ for i in test_range:
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
 
+        # trains classifier on training data-fold
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_test)
 
     end = time.perf_counter()
     times.append(end-start)
+    
+    # appends cross evaluation score
     mean_score = np.mean(cross_val_score(clf, X, y, cv=kf))
     mean_acc.append(mean_score)
 
+    #inserts the numbers of features for x label on the plot
     index.append(len(testfeat))
+
+    #removes a feature
     testfeat.pop()
     
 
