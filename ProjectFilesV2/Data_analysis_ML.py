@@ -17,28 +17,26 @@ the total number of words spoken by each gender, and finally creates a bar chart
 of words spoken by each gender.
 
 '''
-
-# Load data 
+# Load data
 data = pd.read_csv('train.csv')
 
-# Create a new column indicating the gender of the co-lead based on the gender of the lead
-data.loc[data['Lead'] == 'Female', 'Co-Lead Gender'] = 'Male'
-data.loc[data['Lead'] == 'Male', 'Co-Lead Gender'] = 'Female'
+# Calculate total number of words spoken by each gender in the dataset
+total_male_words = data['Number words male'].sum() + data.loc[data['Lead']=='Male', 'Number of words lead'].sum()
+total_female_words = data['Number words female'].sum() + data.loc[data['Lead']=='Female', 'Number of words lead'].sum()
 
-# Group the data by lead and co-lead gender and calculate the sum of the number of words spoken by each gender
-gender_words = data.groupby(['Lead', 'Co-Lead Gender'])[['Number words female', 'Number words male']].sum()
+# Calculate percentage of words spoken by each gender
+male_percentage = total_male_words / (total_male_words + total_female_words) * 100
+female_percentage = total_female_words / (total_male_words + total_female_words) * 100
 
-# Calculate the total number of words spoken by each gender
-total_words = gender_words.sum()
+print(f'Male percentage: {male_percentage}')
+print(f'Female percentage: {female_percentage}')
 
-# Calculate the percentage of words spoken by each gender
-percent_female = 100 * total_words['Number words female'] / sum(total_words)
-percent_male = 100 * total_words['Number words male'] / sum(total_words)
+# Create bar plot
 
-# Create a bar chart showing the percentage of words spoken by each gender
-plt.bar(['Female', 'Male'], [percent_female, percent_male])
-plt.title('Percentage of words spoken by gender')
-plt.ylabel('Percentage')
+fig, ax = plt.subplots()
+ax.bar(['Male', 'Female'], [male_percentage, female_percentage])
+ax.set_ylabel('Percentage of Words Spoken')
+ax.set_title('Percentage of Words Spoken by Gender')
 plt.show()
 
 # Question 2
@@ -46,31 +44,29 @@ plt.show()
 # load the data into a pandas DataFrame
 df = pd.read_csv('train.csv')
 
-# create separate columns for male and female words spoken by all actors
 df['Number words male all'] = df.apply(lambda row: row['Number words male'] + row['Number of words lead'] if row['Lead'] == 'Male' else row['Number words male'], axis=1)
 df['Number words female all'] = df.apply(lambda row: row['Number words female'] + row['Number of words lead'] if row['Lead'] == 'Female' else row['Number words female'], axis=1)
 
-# group the data by year and calculate the total number of words spoken by male and female actors
+
 df_yearly = df.groupby('Year')[['Number words male all', 'Number words female all']].sum()
 
 # calculate the total number of words spoken by all actors each year
 df_yearly['Total words'] = df_yearly['Number words male all'] + df_yearly['Number words female all']
 
-# calculate the percentage of words spoken by male and female actors each year
+# Calculate the percentage of words spoken by male and female actors each year
 df_yearly['Male %'] = df_yearly['Number words male all'] / df_yearly['Total words'] * 100
 df_yearly['Female %'] = df_yearly['Number words female all'] / df_yearly['Total words'] * 100
 
-# create a bar chart
+
 plt.bar(df_yearly.index, df_yearly['Male %'], label='Male')
 plt.bar(df_yearly.index, df_yearly['Female %'], bottom=df_yearly['Male %'], label='Female')
 
-# set the chart title, axes labels, and legend
 plt.title('Gender Balance in Speaking Roles Over Time')
 plt.xlabel('Year')
 plt.ylabel('Percentage of Total Words')
 plt.legend()
 
-# show the chart
+
 plt.show()
 
 # Question 3

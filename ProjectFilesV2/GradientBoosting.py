@@ -28,7 +28,7 @@ allfeatures =  ['Number words female','Number of female actors','Age Lead','Diff
 #The 9 features giving the highest accuracy
 importantfeatures = ['Number words female','Number of female actors','Age Lead','Difference in words lead and co-lead','Age Co-Lead','Number of male actors','Number words male','Mean Age Female','Mean Age Male']
 
-#Number of folds
+#Number of folds for k-fold cross validation
 n_folds = 10
 kf = KFold(n_splits=n_folds)
 
